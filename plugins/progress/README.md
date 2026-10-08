@@ -1,0 +1,29 @@
+# progress（任務進度條）
+
+同時開多個 session 各跑各的任務時，在輸入框上方看到每個 session **正在執行的任務**做到幾成、約剩幾分鐘，免得逐一切換視窗查看。
+
+## 畫面
+
+- 每列＝專案名＋任務名（取你交代那句話的前段）＋百分比＋「剩約 N 分」；本 session 標 ★。
+- 最多 3 列，其餘折成「另 N 個執行中」；名稱依實際欄寬截斷（中文算 2 格）。
+- 顏色：藍＝執行中；黃＝等你回應（「等待裁定」＝選項或計畫核准對話框、「等待授權」＝權限對話框）；紅＝回合因 API 錯誤或模型拒答結束，留到該 session 下個任務開始。
+- 任務完成、你自行中斷、或 session 逾 20 秒沒有心跳（程序被關掉），就不再顯示。
+
+## 百分比怎麼來
+
+- Claude 有待辦清單（至少 2 項）時，以完成比例為準。
+- 否則由 Mod 以分身（共用 prompt cache）估「整個任務完成幾成」：第一步、其後每 3 步或每 1 分鐘重估一次；只升不降，執行中上限 95%。
+- 子代理的工具呼叫不計入主任務。
+
+## 額度與資料
+
+- 每個任務多花分身呼叫：短任務約 2–3 次，長任務約每分鐘 1 次；等你回應時不重估。
+- 各 session 狀態寫在 `~/.claude/claude-mods-data/progress/<session id>.json`，12 小時無更新者不再讀取。只看得到本機的 session。
+
+## 限制
+
+Mod API 屬 early access；百分比為估計值。
+
+---
+
+**English:** A band above the prompt listing every local session's running task with percent done and minutes left. Percent comes from Claude's todo list when there is one, otherwise from a forked estimate (first step, then every 3 steps or minute; never decreases; capped at 95% while running). Blue = running, yellow = waiting for you, red = ended on an API error or refusal. Costs about 2–3 forks per short task and about one per minute on long ones. State files live under `~/.claude/claude-mods-data/progress/`.

@@ -1,0 +1,26 @@
+{
+  "name": "claude-code-mods-zh",
+  "owner": {
+    "name": "SynchronicEros"
+  },
+  "metadata": {
+    "description": "繁體中文介面之 Claude Code Mods（function hooks plugins）：任務進度條、復盤、下一步建議"
+  },
+  "plugins": [
+    {
+      "name": "progress",
+      "source": "./plugins/progress",
+      "description": "任務進度條：輸入框上方列出本機各 session 正在執行的任務、進度與預估剩餘時間"
+    },
+    {
+      "name": "retro",
+      "source": "./plugins/retro",
+      "description": "復盤：偵測到你在糾正 Claude 時主動提議復盤，逐項核准後交由主對話寫入記憶或規則檔"
+    },
+    {
+      "name": "next-steps-zh",
+      "source": "./plugins/next-steps-zh",
+      "description": "下一步建議繁中版：改寫自社群 plugin next-steps，建議與介面一律繁體中文"
+    }
+  ]
+}
