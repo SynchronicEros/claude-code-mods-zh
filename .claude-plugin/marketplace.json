@@ -45,7 +45,7 @@
         "source": "github",
         "repo": "SynchronicEros/claude-code-doc-governance-zh"
       },
-      "description": "文件治理起手式（skill）：init 自公開範本建立 CLAUDE.md、決策紀錄與用途目錄；upgrade 比對範本更新並依擴增指南擴增規範"
+      "description": "文件治理起手式（skill）：setup 自公開範本建立 CLAUDE.md、決策紀錄與用途目錄；upgrade 比對範本更新並依擴增指南擴增規範"
     }
   ]
 }
