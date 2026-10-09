@@ -4,15 +4,18 @@
 
 ## 安裝
 
-**需要 Claude Code（付費方案）；Codex 免費版不能安裝。** 還沒裝 Claude Code，見[官方安裝說明](https://code.claude.com/docs/zh-TW/setup)。Mod（`progress`、`retro`、`next-steps-zh`）另需 Claude Code **v2.1.287 以上**（Mods 於 2026/10/01 推出，API 仍屬 early access，也就是搶先體驗版，引擎更新可能使 Mod 失效）；skill 無此限制。查版本，會顯示像 `2.1.292 (Claude Code)` 的一行；版本太舊就執行 `claude update`：
+- 需要 **Claude Code（付費方案）**；Codex 免費版不能安裝（只有 Codex 的人，改照[範本 repo](https://github.com/SynchronicEros/eros-kmu-learning-example) README「只用 Codex 的人」一節）。
+- 還沒裝 Claude Code：見[官方安裝說明](https://code.claude.com/docs/zh-TW/setup)。
+- Mod（`progress`、`retro`、`next-steps-zh`）需要 Claude Code **v2.1.287 以上**（Mods 於 2026/10/01 推出，API 仍屬 early access，也就是搶先體驗版，引擎更新可能使 Mod 失效）；skill 無此限制。
+- Windows：三個 Mod 不需另裝工具（作者尚未在 Windows 實機測試）；`codex-image` 與 `doc-governance` 需要 Git Bash：安裝 [Git for Windows](https://git-scm.com/downloads/win) 就有（選項都用預設即可），裝完重開 Claude Code。
+
+**指令貼在哪裡**：貼在**終端機**，貼上後按 Enter（Mac：按 ⌘＋空白鍵開 Spotlight，搜尋「終端機」；Windows：在開始選單搜尋「PowerShell」）。不是貼在 Claude Code 的對話框。若終端機回應 `command not found`（找不到指令），表示終端機裡還沒有 Claude Code：照上面的官方安裝說明安裝；只用桌面版的人，改用下方「對話框裡」的寫法。
+
+先查版本，會顯示像 `2.1.292 (Claude Code)` 的一行；版本太舊就執行 `claude update`：
 
 ```bash
 claude --version
 ```
-
-Windows：Windows 版 Claude Code 也能安裝。三個 Mod 不呼叫外部指令，不需另裝工具（作者尚未在 Windows 實機測試）；`codex-image` 與 `doc-governance` 需要 Git Bash：安裝 [Git for Windows](https://git-scm.com/downloads/win) 就有（選項都用預設即可），裝完重開 Claude Code。
-
-下面的指令貼在**終端機**（Mac：「終端機」App；Windows：PowerShell），貼上後按 Enter；不是貼在 Claude Code 的對話框。已經在 Claude Code 對話框裡的話，改打 `/plugin marketplace add …` 與 `/plugin install …`（去掉開頭的 `claude`，改成斜線）。
 
 ```bash
 claude plugin marketplace add SynchronicEros/claude-code-mods-zh
@@ -22,15 +25,21 @@ claude plugin marketplace add SynchronicEros/claude-code-mods-zh
 claude plugin install progress@claude-code-mods-zh
 ```
 
-`retro`、`next-steps-zh`、`codex-image`、`doc-governance` 同法安裝（把 `progress` 換成名稱）。安裝時若出現英文訊息「SSH not configured, cloning via HTTPS」或「userConfig options not yet set」，可以忽略（沒設定就用預設值）。
+`retro`、`next-steps-zh`、`codex-image`、`doc-governance` 同法安裝（把 `progress` 換成名稱）。
+
+**對話框裡**（已經在 Claude Code 裡，或只用桌面版）：改打 `/plugin marketplace add SynchronicEros/claude-code-mods-zh`，再打 `/plugin install progress@claude-code-mods-zh`；會跳出英文選單，選第一個 **Install for you (user scope)**。
+
+安裝時若出現英文訊息「SSH not configured, cloning via HTTPS」或「userConfig options not yet set」，可以忽略（沒設定就用預設值）。
 
 裝好後要**開新的 session（一次新對話）**才會生效：終端機版先打 `/exit` 離開，再打 `claude`；桌面版開一個新對話。
 
-**本目錄與單一 repo 二擇一**：每個 Mod 或 skill 也可直接從它自己的 repo 安裝，但同一個只從一處裝（skill 兩處都裝會出現兩份）。用 `claude plugin list` 檢查；若同一名稱出現兩次（例如 `doc-governance@claude-code-mods-zh` 與 `doc-governance@claude-code-doc-governance-zh`），移除其中一份：
+**本目錄與單一 repo 二擇一**：每個 Mod 或 skill 也可直接從它自己的 repo 安裝，但同一個只從一處裝（skill 兩處都裝會出現兩份）。用 `claude plugin list` 檢查；若同一名稱出現兩次（例如 `doc-governance@claude-code-mods-zh` 與 `doc-governance@claude-code-doc-governance-zh`），**保留本目錄那份**，移除單一 repo 那份（只執行一次）：
 
 ```bash
 claude plugin uninstall doc-governance@claude-code-doc-governance-zh
 ```
+
+再用 `claude plugin list` 確認只剩一份。重複執行會出現 ✘ 與「not installed」，表示已經移除過，無害。
 
 `next-steps-zh` 與官方 `next-steps` 不可同時啟用，否則會出現兩組建議。先用 `claude plugin list` 看有沒有 `next-steps@claude-community`；**沒有就不用做**，有的話停用：
 
@@ -39,6 +48,20 @@ claude plugin disable next-steps@claude-community
 ```
 
 （沒裝過官方版卻執行這行，會顯示 ✘ 與「already disabled」，無害。）
+
+## 更新
+
+有新版時，在終端機執行兩行（把 `progress` 換成要更新的名稱），再開新的 session：
+
+```bash
+claude plugin marketplace update claude-code-mods-zh
+```
+
+```bash
+claude plugin update progress@claude-code-mods-zh
+```
+
+只打第二行會顯示「already at the latest version」，因為還沒先抓新的目錄。`doc-governance` 0.1.3 起 skill `init` 改名為 `setup`：更新後改打 `/doc-governance:setup`，或照舊說「建立治理架構」。
 
 | Mod | 用途 |
 |---|---|
