@@ -2,11 +2,23 @@
 
 繁體中文介面的 Claude Code Mods（function hooks plugins）與 skills 總目錄。每個 Mod 或 skill 各自一個 repo，可一次加入本目錄後挑著裝，也可單獨安裝。
 
+| Mod | 用途 |
+|---|---|
+| [`progress`](https://github.com/SynchronicEros/claude-code-progress-zh) | 任務進度條：同時開多個 session 時，在輸入框上方列出每個 session 正在執行的任務做到幾成、約剩幾分鐘、是否在等你回應 |
+| [`retro`](https://github.com/SynchronicEros/claude-code-retro-zh) | 復盤：偵測到你在糾正 Claude 時主動提議復盤，列出擬固定的教訓讓你逐項核准，再交給主對話寫入記憶或規則檔 |
+| [`next-steps-zh`](https://github.com/SynchronicEros/claude-code-next-steps-zh) | 下一步建議繁中版：每回合結束後在輸入框上方給至多三則下一步建議；改寫自社群 plugin `next-steps` |
+
+| Skill | 用途 |
+|---|---|
+| [`codex-image`](https://github.com/SynchronicEros/claude-code-codex-image-zh) | 經 Codex CLI 產圖：讓 Claude 呼叫 Codex 內建影像生成工具，原圖直接存進目前專案；須先自行安裝並登入 Codex CLI |
+| [`doc-governance`](https://github.com/SynchronicEros/claude-code-doc-governance-zh) | 文件治理起手式：`setup` 自公開範本建立 CLAUDE.md、決策紀錄與用途目錄，`upgrade` 比對範本更新並依擴增指南擴增規範；範本內容為 CC BY 4.0 |
+
 ## 安裝
 
-- 需要 **Claude Code（付費方案）**；Codex 免費版不能安裝（只有 Codex 的人，改照[範本 repo](https://github.com/SynchronicEros/eros-kmu-learning-example) README「只用 Codex 的人」一節）。
+- 需要 **Claude Code（付費方案）**；Codex 免費版不能安裝（只有 Codex 的人，改照[範本 repo 的「只用 Codex 的人」](https://github.com/SynchronicEros/eros-kmu-learning-example#只用-codex不用-claude-code的人)）。
 - 還沒裝 Claude Code：見[官方安裝說明](https://code.claude.com/docs/zh-TW/setup)。
 - Mod（`progress`、`retro`、`next-steps-zh`）需要 Claude Code **v2.1.287 以上**（Mods 於 2026/10/01 推出，API 仍屬 early access，也就是搶先體驗版，引擎更新可能使 Mod 失效）；skill 無此限制。
+- Mac 第一次安裝可能跳出安裝「命令列開發者工具」的視窗：按「安裝」，裝完再重跑一次指令。
 - Windows：三個 Mod 不需另裝工具（作者尚未在 Windows 實機測試）；`codex-image` 與 `doc-governance` 需要 Git Bash：安裝 [Git for Windows](https://git-scm.com/downloads/win) 就有（選項都用預設即可），裝完重開 Claude Code。
 
 **指令貼在哪裡**：貼在**終端機**，貼上後按 Enter（Mac：按 ⌘＋空白鍵開 Spotlight，搜尋「終端機」；Windows：在開始選單搜尋「PowerShell」）。不是貼在 Claude Code 的對話框。若終端機回應 `command not found`（找不到指令），表示終端機裡還沒有 Claude Code：照上面的官方安裝說明安裝；只用桌面版的人，改用下方「對話框裡」的寫法。
@@ -39,15 +51,15 @@ claude plugin install progress@claude-code-mods-zh
 claude plugin uninstall doc-governance@claude-code-doc-governance-zh
 ```
 
-再用 `claude plugin list` 確認只剩一份。重複執行會出現 ✘ 與「not installed」，表示已經移除過，無害。
+再用 `claude plugin list` 確認只剩一份。對話框裡：打 `/plugin`、按 Tab 切到 Installed 分頁檢查，打 `/plugin uninstall` 開啟面板移除。桌面版：按輸入框旁的「＋」→ Plugins → Manage plugins，可停用或移除。
 
-`next-steps-zh` 與官方 `next-steps` 不可同時啟用，否則會出現兩組建議。先用 `claude plugin list` 看有沒有 `next-steps@claude-community`；**沒有就不用做**，有的話停用：
+`next-steps-zh` 與官方 `next-steps` 不可同時啟用，否則會出現兩組建議。先用 `claude plugin list` 看有沒有 `next-steps@claude-community`；**沒有就不用做**，有的話停用（對話框裡打 `/plugin disable` 開啟面板操作）：
 
 ```bash
 claude plugin disable next-steps@claude-community
 ```
 
-（沒裝過官方版卻執行這行，會顯示 ✘ 與「already disabled」，無害。）
+重複執行，或對沒裝的東西執行時，出現 ✘ 與「not installed」或「already disabled」都無害。
 
 ## 更新
 
@@ -61,18 +73,7 @@ claude plugin marketplace update claude-code-mods-zh
 claude plugin update progress@claude-code-mods-zh
 ```
 
-只打第二行會顯示「already at the latest version」，因為還沒先抓新的目錄。`doc-governance` 0.1.3 起 skill `init` 改名為 `setup`：更新後改打 `/doc-governance:setup`，或照舊說「建立治理架構」。
-
-| Mod | 用途 |
-|---|---|
-| [`progress`](https://github.com/SynchronicEros/claude-code-progress-zh) | 任務進度條：同時開多個 session 時，在輸入框上方列出每個 session 正在執行的任務做到幾成、約剩幾分鐘、是否在等你回應 |
-| [`retro`](https://github.com/SynchronicEros/claude-code-retro-zh) | 復盤：偵測到你在糾正 Claude 時主動提議復盤，列出擬固定的教訓讓你逐項核准，再交給主對話寫入記憶或規則檔 |
-| [`next-steps-zh`](https://github.com/SynchronicEros/claude-code-next-steps-zh) | 下一步建議繁中版：每回合結束後在輸入框上方給至多三則下一步建議；改寫自社群 plugin `next-steps` |
-
-| Skill | 用途 |
-|---|---|
-| [`codex-image`](https://github.com/SynchronicEros/claude-code-codex-image-zh) | 經 Codex CLI 產圖：讓 Claude 呼叫 Codex 內建影像生成工具，原圖直接存進目前專案；須先自行安裝並登入 Codex CLI |
-| [`doc-governance`](https://github.com/SynchronicEros/claude-code-doc-governance-zh) | 文件治理起手式：`setup` 自公開範本建立 CLAUDE.md、決策紀錄與用途目錄，`upgrade` 比對範本更新並依擴增指南擴增規範；範本內容為 CC BY 4.0 |
+看到「already at the latest version」就代表已是最新版。對話框裡：先打 `/plugin marketplace update claude-code-mods-zh`，再打 `/plugin`、按 Tab 切到 Installed 分頁，選要更新的 plugin → Update now。桌面版的更新方式官方文件沒有說明，找不到的話請改用終端機。`doc-governance` 0.1.3 起 skill `init` 改名為 `setup`：更新後改打 `/doc-governance:setup`，或照舊說「建立治理架構」。
 
 ## 額度與隱私
 
@@ -107,7 +108,7 @@ claude plugin marketplace add SynchronicEros/claude-code-mods-zh
 claude plugin install progress@claude-code-mods-zh
 ```
 
-Install `retro`, `next-steps-zh`, `codex-image` and `doc-governance` the same way. Install each one from either this index or its own repo, not both (skills installed twice show up twice; check with `claude plugin list`).
+Install `retro`, `next-steps-zh`, `codex-image` and `doc-governance` the same way. Install each one from either this index or its own repo, not both — keep the index copy and remove the other with `claude plugin uninstall <name>@<its repo>` (skills installed twice show up twice; check with `claude plugin list`). To update: `claude plugin marketplace update claude-code-mods-zh`, then `claude plugin update <name>@claude-code-mods-zh`, then start a new session.
 
 Changes take effect in new sessions. Do not enable `next-steps-zh` together with the official `next-steps` (`claude plugin disable next-steps@claude-community`).
 
