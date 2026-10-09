@@ -4,13 +4,15 @@
 
 ## 安裝
 
-**需要 Claude Code（付費方案）；Codex 免費版不能安裝。** Mod（`progress`、`retro`、`next-steps-zh`）另需 Claude Code **v2.1.287 以上**（Mods 於 2026/10/01 推出，API 仍屬 early access，引擎更新可能使 Mod 失效）；skill 無此限制。查版本：
+**需要 Claude Code（付費方案）；Codex 免費版不能安裝。** 還沒裝 Claude Code，見[官方安裝說明](https://code.claude.com/docs/zh-TW/setup)。Mod（`progress`、`retro`、`next-steps-zh`）另需 Claude Code **v2.1.287 以上**（Mods 於 2026/10/01 推出，API 仍屬 early access，也就是搶先體驗版，引擎更新可能使 Mod 失效）；skill 無此限制。查版本，會顯示像 `2.1.292 (Claude Code)` 的一行；版本太舊就執行 `claude update`：
 
 ```bash
 claude --version
 ```
 
-Windows：Windows 版 Claude Code 也能安裝。三個 Mod 不呼叫外部指令，不需另裝工具（作者尚未在 Windows 實機測試）；`codex-image` 與 `doc-governance` 需要 Git Bash。
+Windows：Windows 版 Claude Code 也能安裝。三個 Mod 不呼叫外部指令，不需另裝工具（作者尚未在 Windows 實機測試）；`codex-image` 與 `doc-governance` 需要 Git Bash：安裝 [Git for Windows](https://git-scm.com/downloads/win) 就有（選項都用預設即可），裝完重開 Claude Code。
+
+下面的指令貼在**終端機**（Mac：「終端機」App；Windows：PowerShell），貼上後按 Enter；不是貼在 Claude Code 的對話框。已經在 Claude Code 對話框裡的話，改打 `/plugin marketplace add …` 與 `/plugin install …`（去掉開頭的 `claude`，改成斜線）。
 
 ```bash
 claude plugin marketplace add SynchronicEros/claude-code-mods-zh
@@ -20,13 +22,23 @@ claude plugin marketplace add SynchronicEros/claude-code-mods-zh
 claude plugin install progress@claude-code-mods-zh
 ```
 
-`retro`、`next-steps-zh`、`codex-image`、`doc-governance` 同法安裝。只想要其中一個，也可直接加入該 Mod 的 repo（安裝方式見各 repo README）。安裝或更新後，**新開的 session 才會生效**。
+`retro`、`next-steps-zh`、`codex-image`、`doc-governance` 同法安裝（把 `progress` 換成名稱）。安裝時若出現英文訊息「SSH not configured, cloning via HTTPS」或「userConfig options not yet set」，可以忽略（沒設定就用預設值）。
 
-`next-steps-zh` 與官方 `next-steps` 不可同時啟用，否則會出現兩組建議；裝過官方版的人先停用：
+裝好後要**開新的 session（一次新對話）**才會生效：終端機版先打 `/exit` 離開，再打 `claude`；桌面版開一個新對話。
+
+**本目錄與單一 repo 二擇一**：每個 Mod 或 skill 也可直接從它自己的 repo 安裝，但同一個只從一處裝（skill 兩處都裝會出現兩份）。用 `claude plugin list` 檢查；若同一名稱出現兩次（例如 `doc-governance@claude-code-mods-zh` 與 `doc-governance@claude-code-doc-governance-zh`），移除其中一份：
+
+```bash
+claude plugin uninstall doc-governance@claude-code-doc-governance-zh
+```
+
+`next-steps-zh` 與官方 `next-steps` 不可同時啟用，否則會出現兩組建議。先用 `claude plugin list` 看有沒有 `next-steps@claude-community`；**沒有就不用做**，有的話停用：
 
 ```bash
 claude plugin disable next-steps@claude-community
 ```
+
+（沒裝過官方版卻執行這行，會顯示 ✘ 與「already disabled」，無害。）
 
 | Mod | 用途 |
 |---|---|
@@ -72,8 +84,10 @@ claude plugin marketplace add SynchronicEros/claude-code-mods-zh
 claude plugin install progress@claude-code-mods-zh
 ```
 
+Install `retro`, `next-steps-zh`, `codex-image` and `doc-governance` the same way. Install each one from either this index or its own repo, not both (skills installed twice show up twice; check with `claude plugin list`).
+
 Changes take effect in new sessions. Do not enable `next-steps-zh` together with the official `next-steps` (`claude plugin disable next-steps@claude-community`).
 
-**Quota and privacy:** all three call the model on your own quota (see the notes above). Data stays local; only `progress` writes files, under `~/.claude/claude-mods-data/progress/`. Read the source before installing any mod.
+**Quota and privacy:** the three mods call the model on your own quota (and `codex-image` uses your ChatGPT image quota) (see the notes above). Data stays local; only `progress` writes files, under `~/.claude/claude-mods-data/progress/`. Read the source before installing any mod.
 
 **License:** MIT. `next-steps-zh` is adapted from Thariq Shihipar's `next-steps`; see its NOTICE.
