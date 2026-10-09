@@ -4,7 +4,7 @@
     "name": "SynchronicEros"
   },
   "metadata": {
-    "description": "繁體中文介面之 Claude Code Mods（function hooks plugins）：任務進度條、復盤、下一步建議"
+    "description": "繁體中文介面之 Claude Code Mods（function hooks plugins）與 skills：任務進度條、復盤、下一步建議、經 Codex 產圖、文件治理起手式"
   },
   "plugins": [
     {
@@ -30,6 +30,22 @@
         "repo": "SynchronicEros/claude-code-next-steps-zh"
       },
       "description": "下一步建議繁中版：改寫自社群 plugin next-steps，建議與介面一律繁體中文"
+    },
+    {
+      "name": "codex-image",
+      "source": {
+        "source": "github",
+        "repo": "SynchronicEros/claude-code-codex-image-zh"
+      },
+      "description": "經 Codex CLI 產圖（skill）：讓 Claude Code 呼叫 Codex 內建影像生成工具，原圖直接存進目前專案"
+    },
+    {
+      "name": "doc-governance",
+      "source": {
+        "source": "github",
+        "repo": "SynchronicEros/claude-code-doc-governance-zh"
+      },
+      "description": "文件治理起手式（skill）：init 自公開範本建立 CLAUDE.md、決策紀錄與用途目錄；upgrade 比對範本更新並依擴增指南擴增規範"
     }
   ]
 }
