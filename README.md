@@ -5,7 +5,7 @@
 | Mod | 用途 |
 |---|---|
 | [`progress`](https://github.com/SynchronicEros/claude-code-progress-zh) | 任務進度條：同時開多個 session 時，在輸入框上方列出每個 session 正在執行的任務做到幾成、約剩幾分鐘、是否在等你回應 |
-| [`retro`](https://github.com/SynchronicEros/claude-code-retro-zh) | 復盤：偵測到你在糾正 Claude 時主動提議復盤，列出擬固定的教訓讓你逐項核准，再交給主對話寫入記憶或規則檔 |
+| [`retro`](https://github.com/SynchronicEros/claude-code-retro-zh) | 檢討：偵測到你在糾正 Claude 時主動提議檢討，列出擬固定的教訓讓你逐項核准，再交給主對話寫入記憶或規則檔 |
 | [`next-steps-zh`](https://github.com/SynchronicEros/claude-code-next-steps-zh) | 下一步建議繁中版：每回合結束後在輸入框上方給至多三則下一步建議；改寫自社群 plugin `next-steps` |
 
 | Skill | 用途 |
@@ -38,7 +38,7 @@
 ## 額度與隱私
 
 - `codex-image` 每張圖用掉你自己的 ChatGPT 產圖額度；請用自己的 ChatGPT 帳號，不要多人共用。
-- 三個 Mod 都會使用你自己的 Claude 額度呼叫模型：`progress` 以分身估進度（短任務約 2–3 次、長任務約每分鐘 1 次）；`retro` 偵測到疑似糾正時以小模型確認一次、復盤時呼叫分身一次；`next-steps-zh` 每個夠長的回答後呼叫分身一次。
+- 三個 Mod 都會使用你自己的 Claude 額度呼叫模型：`progress` 以分身估進度（短任務約 2–3 次、長任務約每分鐘 1 次）；`retro` 偵測到疑似糾正時以小模型確認一次、檢討時呼叫分身一次；`next-steps-zh` 每個夠長的回答後呼叫分身一次。
 - 資料只留在本機：`progress` 把各 session 狀態寫在 `~/.claude/claude-mods-data/progress/`（有設 `CLAUDE_CONFIG_DIR` 時在該目錄下）；`retro` 與 `next-steps-zh` 不寫任何檔案。
 - 安裝任何 Mod 前請先讀原始碼：Mod 跑在 Claude Code 程序內，能讀寫檔案與呼叫模型。
 

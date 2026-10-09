@@ -4,7 +4,7 @@
     "name": "SynchronicEros"
   },
   "metadata": {
-    "description": "繁體中文介面之 Claude Code Mods（function hooks plugins）與 skills：任務進度條、復盤、下一步建議、經 Codex 產圖、文件治理起手式"
+    "description": "繁體中文介面之 Claude Code Mods（function hooks plugins）與 skills：任務進度條、檢討、下一步建議、經 Codex 產圖、文件治理起手式"
   },
   "plugins": [
     {
@@ -21,7 +21,7 @@
         "source": "url",
         "url": "https://github.com/SynchronicEros/claude-code-retro-zh.git"
       },
-      "description": "復盤：偵測到你在糾正 Claude 時主動提議復盤，逐項核准後交由主對話寫入記憶或規則檔"
+      "description": "檢討：偵測到你在糾正 Claude 時主動提議檢討，逐項核准後交由主對話寫入記憶或規則檔"
     },
     {
       "name": "next-steps-zh",
