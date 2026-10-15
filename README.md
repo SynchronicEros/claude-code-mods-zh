@@ -12,6 +12,7 @@
 |---|---|
 | [`codex-image`](https://github.com/SynchronicEros/claude-code-codex-image-zh) | 經 Codex CLI 產圖：讓 Claude 呼叫 Codex 內建影像生成工具，原圖直接存進目前專案；須先自行安裝並登入 Codex CLI |
 | [`doc-governance`](https://github.com/SynchronicEros/claude-code-doc-governance-zh) | 文件治理起手式：`setup` 自公開範本建立 CLAUDE.md、決策紀錄與用途目錄，`upgrade` 比對範本更新並依擴增指南擴增規範；範本內容為 CC BY 4.0 |
+| [`codex-review`](https://github.com/SynchronicEros/claude-code-codex-review-zh) | 以Codex當對抗審查代理：請另一個模型挑錯，每次送審先經你同意、在隔離資料夾以唯讀沙箱執行並事後查核，Codex的發現全文列出再由Claude逐項查證；須先自行安裝並登入Codex CLI |
 
 ## 安裝
 
@@ -25,19 +26,20 @@
 <summary>給協助安裝的 AI</summary>
 
 - 需要 Claude Code（付費方案）；只有 Codex 的使用者無法安裝。
-- 安裝（user scope，在終端機或 Bash 工具執行）：`claude plugin marketplace add SynchronicEros/claude-code-mods-zh`，再 `claude plugin install <名稱>@claude-code-mods-zh`。名稱：`progress`、`retro`、`next-steps-zh`、`codex-image`、`doc-governance`。
+- 安裝（user scope，在終端機或 Bash 工具執行）：`claude plugin marketplace add SynchronicEros/claude-code-mods-zh`，再 `claude plugin install <名稱>@claude-code-mods-zh`。名稱：`progress`、`retro`、`next-steps-zh`、`codex-image`、`doc-governance`、`codex-review`。
 - 更新：`claude plugin marketplace update claude-code-mods-zh`，再 `claude plugin update <名稱>@claude-code-mods-zh`；顯示 already at the latest version 即為最新。
 - 一律保留總目錄那份；若同時從單一 repo 裝了同名者（例如 `doc-governance@claude-code-doc-governance-zh`），執行 `claude plugin uninstall <名稱>@<該 repo 名>`。
 - 安裝或更新後須開新的 session 才生效（終端機版 `/exit` 後重打 `claude`；桌面版開新對話）。桌面版 Code 分頁不能用 `/plugin` 指令。
-- 三個 Mod 需要 Claude Code v2.1.287 以上（`claude --version` 查詢，太舊執行 `claude update`）；Windows 上兩個 skill 的指令需要 Git Bash（隨 Git for Windows 安裝）。
+- 三個 Mod 需要 Claude Code v2.1.287 以上（`claude --version` 查詢，太舊執行 `claude update`）；Windows 上 skill 的指令需要 Git Bash（隨 Git for Windows 安裝）。
 - 裝 `next-steps-zh` 前，若已裝官方 `next-steps@claude-community`，先 `claude plugin disable next-steps@claude-community`。
-- `codex-image` 須由使用者本人安裝並登入 Codex CLI，不要代為登入。`doc-governance` 0.1.3 起 skill `init` 改名為 `setup`。
+- `codex-image`、`codex-review` 須由使用者本人安裝並登入 Codex CLI，不要代為登入；`codex-review` 另需 Python 3。`doc-governance` 0.1.3 起 skill `init` 改名為 `setup`。
 
 </details>
 
 ## 額度與隱私
 
 - `codex-image` 每張圖用掉你自己的 ChatGPT 產圖額度；請用自己的 ChatGPT 帳號，不要多人共用。
+- `codex-review` 會把你同意送審的內容傳到OpenAI，並用掉自己的ChatGPT額度（短文件約1.5萬至3萬token）。
 - 三個 Mod 都會使用你自己的 Claude 額度呼叫模型：`progress` 以分身估進度（短任務約 2–3 次、長任務約每分鐘 1 次）；`retro` 偵測到疑似糾正時以小模型確認一次、檢討時呼叫分身一次；`next-steps-zh` 每個夠長的回答後呼叫分身一次。
 - 資料只留在本機：`progress` 把各 session 狀態寫在 `~/.claude/claude-mods-data/progress/`（有設 `CLAUDE_CONFIG_DIR` 時在該目錄下）；`retro` 與 `next-steps-zh` 不寫任何檔案。
 - 安裝任何 Mod 前請先讀原始碼：Mod 跑在 Claude Code 程序內，能讀寫檔案與呼叫模型。
@@ -57,6 +59,7 @@ Index of Claude Code Mods (function-hook plugins) and skills with a Traditional 
 - **[next-steps-zh](https://github.com/SynchronicEros/claude-code-next-steps-zh)** — up to three next-prompt suggestions after each turn, in Traditional Chinese; adapted from the community plugin `next-steps`.
 - **[codex-image](https://github.com/SynchronicEros/claude-code-codex-image-zh)** (skill) — Claude generates images through the Codex CLI's built-in image tool and saves the original file into your project. Install and log in to the Codex CLI yourself first; each image uses your own ChatGPT quota.
 - **[doc-governance](https://github.com/SynchronicEros/claude-code-doc-governance-zh)** (skills) — a minimal document-governance starter kit: `setup` sets up CLAUDE.md, a decision log and folders from the public template; `upgrade` compares with the latest template and drafts new rules when you need them. Template content is CC BY 4.0.
+- **[codex-review](https://github.com/SynchronicEros/claude-code-codex-review-zh)** (skill) — Claude asks Codex, a second model, to review your files adversarially: it asks before every review, runs Codex read-only in an isolated temp folder, audits the commands Codex ran, and lists every finding verbatim with its own verdict. Install and log in to the Codex CLI yourself first; content you send goes to OpenAI on your own ChatGPT quota.
 
 **Install:** requires Claude Code (a paid plan). Ask Claude Code to install the mod or skill you want from this repo, or run `claude plugin marketplace add SynchronicEros/claude-code-mods-zh`, then `claude plugin install <name>@claude-code-mods-zh`; changes take effect in new sessions. Install each one from this index only (if you also added its own repo, uninstall that copy). To update: `claude plugin marketplace update claude-code-mods-zh`, then `claude plugin update <name>@claude-code-mods-zh`. Do not enable `next-steps-zh` together with the official `next-steps`.
 

@@ -4,7 +4,7 @@
     "name": "SynchronicEros"
   },
   "metadata": {
-    "description": "繁體中文介面之 Claude Code Mods（function hooks plugins）與 skills：任務進度條、檢討、下一步建議、經 Codex 產圖、文件治理起手式"
+    "description": "繁體中文介面之 Claude Code Mods（function hooks plugins）與 skills：任務進度條、檢討、下一步建議、經 Codex 產圖、文件治理起手式、以 Codex 對抗審查"
   },
   "plugins": [
     {
@@ -46,6 +46,14 @@
         "url": "https://github.com/SynchronicEros/claude-code-doc-governance-zh.git"
       },
       "description": "文件治理起手式（skill）：setup 自公開範本建立 CLAUDE.md、決策紀錄與用途目錄；upgrade 比對範本更新並依擴增指南擴增規範"
+    },
+    {
+      "name": "codex-review",
+      "source": {
+        "source": "url",
+        "url": "https://github.com/SynchronicEros/claude-code-codex-review-zh.git"
+      },
+      "description": "以Codex當對抗審查代理（skill）：每次送審先經同意、隔離資料夾、唯讀沙箱、事後查核指令，原始發現全文列出再逐項判斷"
     }
   ]
 }
